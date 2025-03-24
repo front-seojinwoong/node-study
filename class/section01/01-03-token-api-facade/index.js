@@ -27,6 +27,8 @@ function createTokenOfPhone(myPhone) { // 매개변수(parameter)
 
   // * 3. 핸드폰번호에 토큰 전송하기
   sendTokenToSMS(myPhone, myToken);
+
+  res.send('인증완료!!!');
 }
 
 createTokenOfPhone("01012345678"); // 인자(argument)
