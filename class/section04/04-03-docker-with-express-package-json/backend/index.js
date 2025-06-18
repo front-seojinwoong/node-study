@@ -66,5 +66,5 @@ app.post('/users', function (req, res) {
   res.send('가입완료!');
 });
 
-app.listen(3000);
+app.listen(7000);
 
