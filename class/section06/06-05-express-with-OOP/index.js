@@ -1,0 +1,37 @@
+// const express = require('express');  옛날 방식 => common.js 방식
+import express from 'express'; // 요즘방식 => 모듈방식
+import { CashService } from './cash.js';
+import { ProductService } from './product.js';
+
+const app = express();
+
+// 상품 구매하기 api
+app.post('/products/buy', (req, res) => {
+  // 1. 가진돈 검증하는 코드 (대략 10줄 정도) => 2줄로 줄어듬
+  const cashService = new CashService();
+  const hasMoney = cashService.checkValue();
+  
+  // 2. 판매여부를 검증하는 코드 (대략 10줄 정도) => 2줄로 줄어듬
+  const productService = new ProductService();
+  const isSoldout = productService.checkSoldout();
+
+  // 3. 상품 구매하는 코드 
+  if (hasMoney && !isSoldout) {
+    res.send('상품 구매 완료!!');
+  }
+});
+
+// 상품 환불하기 api
+app.post('/products/refund', (req, res) => {
+  // 1. 판매여부를 검증하는 코드 (대략 10줄 정도)
+  const productService = new ProductService();
+  const isSoldout = productService.checkSoldout();
+
+  //  2. 상품 환불하는 코드(대략 8줄 정도)
+  if (isSoldout) {
+    res.send("상품 환불 완료!!!");
+  }
+});
+
+app.listen(3000);
+
